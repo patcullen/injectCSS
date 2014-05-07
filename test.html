@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<script src="injectCSS.js"></script>
+	<script type="text/javascript" src="require.js"></script>
+	<style>
+		.test {
+			display: inline-block;
+			width: 70px;
+			height: 70px;
+			margin: 10px;
+			border: 3px dashed #f00;
+		}
+		.explain { color: #aaf; }
+	</style>
+</head>
+<body>
+
+	<div class="test case1">test case 1</div>
+	<div class="test case2">test case 2</div>
+	<div class="test case3">test case 3</div>
+	<div class="test case4">test case 4</div>
+	<div class="test case5">test case 5</div>
+
+	<div id="result"></div>
+	<div class="explain">The test result should say 2. One for the hard-coded style in the head, and one for the node injectCSS() created.</div>
+	
+<script>
+	(function(){
+	var hasInnerText = (document.getElementsByTagName("body")[0].innerText != undefined) ? true : false;
+
+		injectCSS(function(){/*
+			.case1 {
+				border: 3px solid #0f0;
+			}
+		*/});
+		injectCSS('.case2 { border: 3px solid #00f; } ');
+		
+		// now use requireJS to inject
+		require(['injectCSS'], function(injectCSS) {
+			injectCSS('.case3 { border: 3px solid #0ff; } ');
+		});
+		
+		require(['injectCSS'], function(injectCSS) {
+			injectCSS('.case4 { border: 3px solid #ff0; } ');
+			
+			// make almost-sure this test is the last thing to run.
+			setTimeout(function() {
+				var count = document.getElementsByTagName('style').length;
+				document.getElementById('result').innerHTML = 'Number of style nodes: ' + count;
+			}, 1000);
+		});
+		
+		
+	})();
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "injectCSS",
+  "description": "Injects CSS into the document",
+  "version": "0.1.0",
+  "keywords": [
+    "inject",
+    "css"
+  ],
+  "dependencies": {
+  },
+  "scripts": [
+    "injectCSS.js"
+  ],
+  "main": "injectCSS.js",
+  "license": "MIT"
+}
